@@ -1,0 +1,24 @@
+{
+    "name": "Code Snippets",
+    "version": "1.0",
+    "description": "Find latest code snippets from your company and community",
+    "keywords": "code, snippets",
+    "status": "beta",
+    "type": "modules",
+    "package": "codeSnippets",
+    "license": "MIT",
+    "marketid": "",
+    "homepage": "https:\/\/github.com\/LogiksPlugins\/codeSnippets",
+    "bugs": "https:\/\/github.com\/LogiksPlugins\/codeSnippets\/issues",
+    "private": false,
+    "repository": {
+        "url": "https:\/\/github.com\/LogiksPlugins\/codeSnippets.git",
+        "type": "git"
+    },
+    "authors": [
+        {
+            "name": "Bismay M",
+            "email": "bismay@smartinfologiks.com"
+        }
+    ]
+}
