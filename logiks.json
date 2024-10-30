@@ -20,5 +20,14 @@
             "name": "Bismay M",
             "email": "bismay@smartinfologiks.com"
         }
+    ],
+    "navigation": [
+        {
+            "title": "a",
+            "link": "b",
+            "iconpath": "c",
+            "tips": "d",
+            "to_check": "e"
+        }
     ]
 }

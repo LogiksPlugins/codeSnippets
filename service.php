@@ -3,15 +3,47 @@ if(!defined('ROOT')) exit('No direct script access allowed');
 
 handleActionMethodCalls();
 
+function _service_sources() {
+    $srcData = [
+            CMS_APPROOT."config/features/codeSnippets.json",
+            APPROOT."config/features/codeSnippets.json"
+        ];
+    
+    $sourceData = [];
+    foreach($srcData as $f) {
+        if(file_exists($f)) {
+            $jsonData = json_decode(file_get_contents($f), true);
+            if(!$jsonData) $jsonData = [];
+            if(!isset($jsonData['sources'])) $jsonData['sources'] = [];
+            $sourceData = array_merge_recursive($sourceData, $jsonData);
+        }
+    }
+    if(!$sourceData || count($sourceData['sources'])<=0) {
+        $sourceData['sources'] = [
+            "github"=>[
+                "logiks"
+            ]
+        ];
+    }
+    
+    foreach($sourceData['sources'] as $k=>$v) {
+        $sourceData['sources'][$k] = array_unique($v);
+    }
+    
+    $_SESSION['CODE_SNIPPET_SOURCES'] = $sourceData['sources'];
+    
+    return $sourceData['sources'];
+}
+
 function _service_list() {
     $type = "github";
     $userid = "Logiks";
     
-    if(isset($_GET['refid']) && strlen($_GET['refid'])>0) {
-        $userid = $_GET['refid'];
+    if(isset($_REQUEST['refid']) && strlen($_REQUEST['refid'])>0) {
+        $userid = $_REQUEST['refid'];
     }
-    if(isset($_GET['type']) && strlen($_GET['type'])>0) {
-        $type = $_GET['type'];
+    if(isset($_REQUEST['type']) && strlen($_REQUEST['type'])>0) {
+        $type = $_REQUEST['type'];
     }
     
     $repoHash = md5($userid.$type);
@@ -45,7 +77,7 @@ function _service_list() {
     return $repoData;
 }
 
-function fetchGistData($user = "Logiks", $page = 1) {
+function fetchGistData($user = "Logiks", $page = 0) {
     $url = "https://api.github.com/users/{$user}/gists?page={$page}";
     $curl = curl_init();
     
